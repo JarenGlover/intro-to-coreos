@@ -35,9 +35,14 @@ func registerService() {
 }
 
 func startHTTPServer() error {
+
+	helloMessage := fmt.Sprintf("Hello Go! (from %s %s:%s)\n", 
+		os.Getenv("HOSTNAME"), os.Getenv("HOST_ADDRESS"), os.Getenv("HOST_PORT"))
+
 	http.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
+
 		log.Printf("Received request for %s", req.URL.Path)
-		io.WriteString(w, "Hello Go!\n")
+		io.WriteString(w, helloMessage)
 	})
 
 	return http.ListenAndServe(":8000", nil)
